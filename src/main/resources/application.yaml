@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: pontoeletronico
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pontoeletronico
+    username: postgres
+    password: 86065542
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+api:
+  security:
+    token:
+      secret: minha_senha_super_secreta_do_allan_123456
