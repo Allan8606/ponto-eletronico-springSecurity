@@ -42,6 +42,9 @@ public class SecurityConfig {
                     req.requestMatchers(HttpMethod.PUT, "/registroPonto/**").hasAuthority("ADMIN");
                     req.requestMatchers(HttpMethod.DELETE, "/registroPonto/**").hasAuthority("ADMIN");
 
+                    req.requestMatchers(HttpMethod.GET, "/api/api-docs/**").permitAll();
+                    req.requestMatchers(HttpMethod.GET, "/swagger/**").permitAll();
+
                     // O resto precisa pelo menos ter crachá
                     req.anyRequest().authenticated();
                 })
