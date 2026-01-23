@@ -25,6 +25,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
     }
 
+    @ExceptionHandler(RegistroNaoEncontradoException.class)
+    public ResponseEntity<ErroResponse> handleRegistroNaoEncontrado(RegistroNaoEncontradoException ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErroResponse(404, ex.getMessage()));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<List<ErroValidacaoResponse>> handleValidacao(
             MethodArgumentNotValidException ex) {

@@ -7,6 +7,8 @@ import com.allan_dev.projeto_ponto_eletronico.dto.response.FuncionarioResponse;
 import com.allan_dev.projeto_ponto_eletronico.dto.response.RegistroPontoResponse;
 import com.allan_dev.projeto_ponto_eletronico.entity.Funcionario;
 import com.allan_dev.projeto_ponto_eletronico.entity.RegistroPonto;
+import com.allan_dev.projeto_ponto_eletronico.infra.exception.FuncionarioNaoEncontradoException;
+import com.allan_dev.projeto_ponto_eletronico.infra.exception.RegistroNaoEncontradoException;
 import com.allan_dev.projeto_ponto_eletronico.mapper.FuncionarioMapper;
 import com.allan_dev.projeto_ponto_eletronico.mapper.RegistroPontoMapper;
 import com.allan_dev.projeto_ponto_eletronico.repository.FuncionarioRepository;
@@ -26,7 +28,8 @@ public class RegistroPontoService {
     private final FuncionarioRepository funcionarioRepository;
 
     public RegistroPontoResponse registrar(RegistroPontoRequest request){
-        var funcionario = funcionarioRepository.findById(request.funcionarioId()).orElseThrow(EntityNotFoundException::new);
+        var funcionario = funcionarioRepository.findById(request.funcionarioId()).orElseThrow(() ->
+                new FuncionarioNaoEncontradoException(request.funcionarioId()));
 
         RegistroPonto registroPonto = RegistroPontoMapper.paraRegistroPonto(request);
 
@@ -50,13 +53,12 @@ public class RegistroPontoService {
                 .stream()
                 .map(RegistroPontoMapper::paraResponse)
                 .toList();
-
     }
 
 
 
     public RegistroPontoResponse editar(Long registro_id, RegistroPontoRequest request){
-        RegistroPonto registroPonto = registroPontoRepository.findById(registro_id).orElseThrow(EntityNotFoundException::new);
+        RegistroPonto registroPonto = buscarEntidadePorId(registro_id);
 
         registroPonto.setData(request.data());
         registroPonto.setHoraEntrada(request.horaEntrada());
@@ -70,5 +72,12 @@ public class RegistroPontoService {
     public void deletar(Long id){
         registroPontoRepository.findById(id).ifPresent(registroPontoRepository::delete);
 
+    }
+
+
+
+    private RegistroPonto buscarEntidadePorId(Long id){
+        return registroPontoRepository.findById(id)
+                .orElseThrow(() -> new RegistroNaoEncontradoException(id));
     }
 }

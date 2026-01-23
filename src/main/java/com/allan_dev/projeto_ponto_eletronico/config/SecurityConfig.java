@@ -33,10 +33,10 @@ public class SecurityConfig {
                     req.requestMatchers(HttpMethod.POST, "/login").permitAll();
 
                     req.requestMatchers(HttpMethod.POST, "/funcionario").permitAll();
-                    req.requestMatchers(HttpMethod.GET, "/funcionario/**").permitAll();
 
                     req.requestMatchers(HttpMethod.DELETE, "/funcionario/**").hasAuthority("ADMIN");
                     req.requestMatchers(HttpMethod.PUT, "/funcionario/**").hasAuthority("ADMIN");
+                    req.requestMatchers(HttpMethod.GET, "/funcionario/**").hasAuthority("ADMIN");
 
                     req.requestMatchers(HttpMethod.GET, "/registroPonto/**").hasAuthority("ADMIN");
                     req.requestMatchers(HttpMethod.PUT, "/registroPonto/**").hasAuthority("ADMIN");

@@ -26,7 +26,7 @@ public class SwagguerConfig {
         contact.setUrl("https://github.com/Allan8606/ponto-eletronico-springSecurity");
 
         Info info = new Info();
-        info.title("MovieFlix");
+        info.title("Registro de Ponto Eletrônico");
         info.version("v1");
         info.description("Aplicação para gerenciamento e registro de ponto eletronico");
         info.contact(contact);
